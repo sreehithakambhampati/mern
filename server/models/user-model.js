@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 const userSchema = new mongoose.Schema({
     username:{
@@ -43,6 +44,24 @@ userSchema.pre("save",async function(next){
         next(error)
     }
 })
+//JSON Web token
+userSchema.methods.generateToken = function(){
+    try {
+        return jwt.sign(
+            {
+                userId:this._id.toString(),
+                email:this.email,
+                isAdmin:this.isAdmin
+            },
+            process.env.JWT_SECRET_KEY,
+            {
+                expiresIn:"30d",
+            }
+        )
+    } catch (error) {
+        console.log(error)
+    }
+}
 // A model is the JavaScript interface to interact with documents in a MongoDB collection using a defined structure.
 const User = new mongoose.model("Users",userSchema)
 module.exports = User;
