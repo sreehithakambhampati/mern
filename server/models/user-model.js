@@ -62,6 +62,10 @@ userSchema.methods.generateToken = function(){
         console.log(error)
     }
 }
+
+userSchema.methods.comparePwd = async function(password){
+    return bcrypt.compare(password,this.password)
+}
 // A model is the JavaScript interface to interact with documents in a MongoDB collection using a defined structure.
 const User = new mongoose.model("Users",userSchema)
 module.exports = User;
