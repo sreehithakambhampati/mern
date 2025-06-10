@@ -5,7 +5,15 @@ const authrouter = require("./router/auth-router");
 const contactRouter = require("./router/contact-router")
 const connectDB = require("./utils/db")
 const errorMiddleware = require("./middleware/errror-middleware")
+const cors = require("cors");
+const corsOptions={
+  origin:"http://localhost:5173",
+  methods:"GET,POST,PUT,DELETE",
+  credentials:true
+
+};
 //docs
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use("/",authrouter)
 app.use("/",contactRouter)
