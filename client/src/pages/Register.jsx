@@ -1,5 +1,6 @@
 import { useState } from "react";
-import {useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router-dom";
+import { useAuth } from "../context/auth";
 export const Register = () => {
     const[user,setUser] = useState({
         username:"",
@@ -7,6 +8,7 @@ export const Register = () => {
         phone:"",
         password:""
     })
+    const {storeinLS} = useAuth();
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,6 +23,9 @@ export const Register = () => {
         });
         if(response.ok)
         {
+           const res_data = await response.json();
+           console.log(res_data);
+           storeinLS(res_data.token);
            setUser({
         username:"",
         email:"",

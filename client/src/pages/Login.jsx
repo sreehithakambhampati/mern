@@ -1,10 +1,12 @@
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
+import { useAuth } from "../context/auth";
 export const Login= () => {
     const[user,setUser] = useState({
         email:"",
         password:""
     });
+    const {storeinLS} = useAuth();
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
          e.preventDefault();
@@ -19,12 +21,16 @@ export const Login= () => {
         });
         if(response.ok)
         {
+          console.log(response);
+         const res_data = await response.json();
+          storeinLS(res_data.token);
            setUser({
        
         email:"",
       
         password:""
            });
+          
            navigate("/");
         }
         console.log(response)
