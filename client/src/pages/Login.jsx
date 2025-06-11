@@ -1,13 +1,36 @@
 import { useState } from "react";
-
+import {useNavigate} from "react-router-dom";
 export const Login= () => {
     const[user,setUser] = useState({
         email:"",
         password:""
     });
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+    const handleSubmit = async (e) => {
          e.preventDefault();
-         console.log(e);
+        
+          try {
+          const response = await fetch("http://localhost:5000/login",{
+          method:'POST',
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify(user),
+        });
+        if(response.ok)
+        {
+           setUser({
+       
+        email:"",
+      
+        password:""
+           });
+           navigate("/");
+        }
+        console.log(response)
+        } catch (error) {
+          
+        }
     }
     const handleInput = (e) => {
           const name = e.target.name;

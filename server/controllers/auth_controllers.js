@@ -29,12 +29,16 @@ const register = async(req,res) => {
 const login = async(req,res) => {
     try {
         const{email,password} = req.body;
+        console.log("Login attempt for email:", email); // DEBUG: See what email is received
+        console.log("Password received:", password);
         const userExist = await User.findOne({email});
         if(!userExist)
-        {
+        { 
+            console.log("User not found for email:");
             return res.status(400).json({msg:"Invalid credentials"});
         }
         const user= await userExist.comparePwd(password);
+        console.log("Password comparison result:", user); 
         if(user)
         {
             return res.status(200).json({
