@@ -10,6 +10,7 @@ import { Register } from './pages/Register';
 import { Service } from './pages/Service';
 import { Navbar } from './components/Navbar';
 import { Error } from './pages/Error';
+import { LogOut } from './pages/Logout';
 
 function App() {
   
@@ -25,6 +26,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/service" element={<Service/>}/>
+        <Route path="/logout" element={<LogOut/>}/>
         <Route path="*" element={<Error/>}/>
        </Routes>
       </BrowserRouter>
