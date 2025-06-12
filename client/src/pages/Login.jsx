@@ -21,6 +21,7 @@ export const Login= () => {
         });
         if(response.ok)
         {
+          alert("Login successful");
           console.log(response);
          const res_data = await response.json();
           storeinLS(res_data.token);
@@ -32,6 +33,10 @@ export const Login= () => {
            });
           
            navigate("/");
+        }
+        else
+        {
+          alert("Invalid credentials");
         }
         console.log(response)
         } catch (error) {
