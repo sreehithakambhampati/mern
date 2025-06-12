@@ -24,6 +24,7 @@ export const Login= () => {
           alert("Login successful");
           console.log(response);
          const res_data = await response.json();
+         console.log(res_data.token)
           storeinLS(res_data.token);
            setUser({
        

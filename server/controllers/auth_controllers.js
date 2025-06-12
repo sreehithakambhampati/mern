@@ -29,8 +29,7 @@ const register = async(req,res) => {
 const login = async(req,res) => {
     try {
         const{email,password} = req.body;
-        console.log("Login attempt for email:", email); // DEBUG: See what email is received
-        console.log("Password received:", password);
+        
         const userExist = await User.findOne({email});
         if(!userExist)
         { 
@@ -58,4 +57,16 @@ const login = async(req,res) => {
     }
 }
 
-module.exports = {home,register,login}
+const user = (req,res) => {
+    try {
+    
+    const userData = req.user;
+    console.log(userData);
+    return res.status(200).json({ msg: userData });
+  } catch (error) {
+    console.log(` error from user route ${error}`);
+  }
+};
+
+
+module.exports = {home,register,login,user}
