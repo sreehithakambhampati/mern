@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../context/auth";
 
 export const Contact = () => {
   const [contact, setContact] = useState({
@@ -6,8 +7,19 @@ export const Contact = () => {
     email: "",
     message: "",
   });
+  const[userData,setUserData] = useState(true)
+  const {user} = useAuth();
+  if(user&&userData)
+  {
+    setContact({
+      username:user.username,
+      email:user.email,
+      message:"",
 
-  // lets tackle our handleInput
+    })
+    setUserData(false)
+  }
+ 
   const handleInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -25,7 +37,7 @@ export const Contact = () => {
     console.log(contact);
   };
 
-//  Help me reach 1 Million subs 👉 https://youtube.com/thapatechnical
+
 
   return (
     <>
@@ -33,13 +45,13 @@ export const Contact = () => {
         <div className="contact-content container">
           <h1 className="main-heading">contact us</h1>
         </div>
-        {/* contact page main  */}
+     
         <div className="container grid grid-two-cols">
           <div className="contact-img">
             <img src="/images/support.png" alt="we are always ready to help" />
           </div>
 
-          {/* contact form content actual  */}
+         
           <section className="section-form">
             <form onSubmit={handleSubmit}>
               <div>
