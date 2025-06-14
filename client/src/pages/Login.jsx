@@ -1,57 +1,55 @@
 import { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
-export const Login= () => {
-    const[user,setUser] = useState({
-        email:"",
-        password:""
-    });
-    const {storeinLS} = useAuth();
-    const navigate = useNavigate();
-    const handleSubmit = async (e) => {
-         e.preventDefault();
-        
-          try {
-          const response = await fetch("http://localhost:5000/login",{
-          method:'POST',
-          headers:{
-            "Content-Type":"application/json"
-          },
-          body:JSON.stringify(user),
+import { toast } from "react-toastify";
+export const Login = () => {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+  const { storeinLS } = useAuth();
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      const res_data = await response.json();
+      console.log(res_data.token);
+      console.log(res_data);
+      if (response.ok) {
+        toast.success("Login successful");
+        console.log(response);
+
+        storeinLS(res_data.token);
+        setUser({
+          email: "",
+          password: "",
         });
-         const res_data = await response.json();
-          console.log(res_data.token)
-          console.log(res_data);
-        if(response.ok)
-        {
-          alert("Login successful");
-          console.log(response);
-         
-          storeinLS(res_data.token);
-          setUser({
-           email:"",
-           password:""
-           });
-          
-           navigate("/");
-        }
-        else
-        {
-          alert(res_data.message);
-        }
-        console.log(response)
-        } catch (error) {
-          
-        }
-    }
-    const handleInput = (e) => {
-          const name = e.target.name;
-          const value = e.target.value;
-          setUser({...user,[name]:value});
-    }
-    return(
+
+        navigate("/");
+      } else {
+        toast.error(res_data.message,{
+  className: "toastBody"
+});
+      }
+      console.log(response);
+    } catch (error) {}
+  };
+  const handleInput = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setUser({ ...user, [name]: value });
+  };
+  return (
     <>
-       <section>
+      <section>
         <main>
           <div className="section-registration">
             <div className="container grid grid-two-cols">
@@ -67,7 +65,6 @@ export const Login= () => {
                 <h1 className="main-heading mb-3">Login form</h1>
                 <br />
                 <form onSubmit={handleSubmit}>
-                  
                   <div>
                     <label htmlFor="email">email</label>
                     <input
@@ -78,7 +75,7 @@ export const Login= () => {
                       placeholder="email"
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="password">password</label>
                     <input
@@ -100,6 +97,5 @@ export const Login= () => {
         </main>
       </section>
     </>
-    )
-
-}
+  );
+};

@@ -27,7 +27,11 @@ body {
   min-height: 100vh;
 }
 
- /*?  Help me reach 1 Million subs 👉 https://youtube.com/thapatechnical */
+.toastBody {
+  font-family: "Atlas Grotesk Web", Arial, Helvetica, sans-serif;
+ 
+  font-size: 1.95rem !important;;
+}
 
 h1 {
   font-size: 5.4rem;
@@ -283,6 +287,8 @@ a.active {
   background: var(--btn-color);
   color: #fff;
 }
+
+
 
 /** -----------------------
 ** registration section css

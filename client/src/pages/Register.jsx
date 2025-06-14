@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
+import { toast } from "react-toastify";
 export const Register = () => {
   const [user, setUser] = useState({
     username: "",
@@ -31,9 +32,10 @@ export const Register = () => {
           phone: "",
           password: "",
         });
+        toast.success("Login successful")
         navigate("/login");
       } else {
-        alert(res_data.message)
+        toast.error(res_data.message);
       }
     } catch (error) {}
   };
