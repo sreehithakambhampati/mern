@@ -19,12 +19,14 @@ export const Login= () => {
           },
           body:JSON.stringify(user),
         });
+         const res_data = await response.json();
+          console.log(res_data.token)
+          console.log(res_data);
         if(response.ok)
         {
           alert("Login successful");
           console.log(response);
-          const res_data = await response.json();
-          console.log(res_data.token)
+         
           storeinLS(res_data.token);
           setUser({
            email:"",
@@ -35,7 +37,7 @@ export const Login= () => {
         }
         else
         {
-          alert("Invalid credentials");
+          alert(res_data.message);
         }
         console.log(response)
         } catch (error) {

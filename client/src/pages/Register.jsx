@@ -1,55 +1,52 @@
 import { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
 export const Register = () => {
-    const[user,setUser] = useState({
-        username:"",
-        email:"",
-        phone:"",
-        password:""
-    })
-    const {storeinLS} = useAuth();
-    const navigate = useNavigate();
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(user);
-        try {
-          const response = await fetch("http://localhost:5000/register",{
-          method:'POST',
-          headers:{
-            "Content-Type":"application/json"
-          },
-          body:JSON.stringify(user),
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
+  const { storeinLS } = useAuth();
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(user);
+    try {
+      const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      const res_data = await response.json();
+      console.log(res_data);
+      if (response.ok) {
+        storeinLS(res_data.token);
+        setUser({
+          username: "",
+          email: "",
+          phone: "",
+          password: "",
         });
-        if(response.ok)
-        {
-           const res_data = await response.json();
-           console.log(res_data);
-           storeinLS(res_data.token);
-           setUser({
-        username:"",
-        email:"",
-        phone:"",
-        password:""
-           })
-           navigate("/login");
-        }
-        console.log(response)
-        } catch (error) {
-          
-        }
-        
-    }
-    
-    const handleInput=(e)=>{
-        let name = e.target.name;
-        let value = e.target.value;
-        // [name]---Use the value stored in the variable name as the key name.
-        setUser({...user,[name]:value});
-    }
-    return(
-        <>
-        <section>
+        navigate("/login");
+      } else {
+        alert(res_data.message)
+      }
+    } catch (error) {}
+  };
+
+  const handleInput = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    // [name]---Use the value stored in the variable name as the key name.
+    setUser({ ...user, [name]: value });
+  };
+  return (
+    <>
+      <section>
         <main>
           <div className="section-registration">
             <div className="container grid grid-two-cols">
@@ -114,7 +111,6 @@ export const Register = () => {
           </div>
         </main>
       </section>
-        </>
-    )
-
-}
+    </>
+  );
+};
